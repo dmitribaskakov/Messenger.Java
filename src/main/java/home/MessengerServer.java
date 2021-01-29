@@ -1,6 +1,6 @@
 package home;
 
-import java.util.concurrent.PriorityBlockingQueue;
+//import java.util.concurrent.PriorityBlockingQueue;
 
 public class MessengerServer {
 
@@ -9,8 +9,7 @@ public class MessengerServer {
 
 
 
-        //PriorityBlockingQueue<String> queue = new PriorityBlockingQueue<>();
-
+//        PriorityBlockingQueue<String> queue = new PriorityBlockingQueue<>();
     }
 
 }

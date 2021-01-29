@@ -1,4 +1,4 @@
-package home.core;
+package home.core.messages;
 
 import java.util.Objects;
 

@@ -3,6 +3,9 @@ package home.core;
 //import java.util.HashMap;
 //import java.util.Map;
 
+import home.core.messages.TextMessage;
+import home.core.messages.TypeOfMessage;
+
 import static org.junit.Assert.*;
 
 public class TextMessageTest {
