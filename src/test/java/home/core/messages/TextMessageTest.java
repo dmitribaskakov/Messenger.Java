@@ -1,23 +1,19 @@
 package home.core.messages;
 
-//import java.util.HashMap;
-//import java.util.Map;
 
-import home.core.messages.TextMessage;
-import home.core.messages.TypeOfMessage;
+import org.junit.Before;
+import org.junit.Test;
+//import home.core.messages.*;
 
 import static org.junit.Assert.*;
 
 public class TextMessageTest {
 
-//    static final Map<String, String> testData = new HashMap<>();
-
-    @org.junit.Before
+    @Before
     public void setUp() {
-//        testData.put("123", "123");
     }
 
-    @org.junit.Test
+    @Test
     public void testEquals() {
         TextMessage actual = new TextMessage();
         actual.setType(TypeOfMessage.MSG_TEXT);
