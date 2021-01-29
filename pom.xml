@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>home</groupId>
+	<artifactId>messenger</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0</version>
+	<name>Messenger Client/Server</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<log4j2-version>2.13.3</log4j2-version>
+  	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc11</artifactId>
+			<version>21.1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/ojdbc11.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.18.jre7</version>
+		</dependency>
+
+		<!-- logging -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<scope>runtime</scope>
+			<version>${log4j2-version}</version>
+		</dependency>
+
+		<!-- testing -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.7.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>20.1.0</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+
+		<plugins>
+	  		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+		  			<source>15</source>
+					<target>15</target>
+				</configuration>
+	  		</plugin>
+	  		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+		  			<encoding>UTF-8</encoding>
+				</configuration>
+	  		</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>Server</id>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+							<includePluginDependencies>true</includePluginDependencies>
+							<mainClass>home.MessengerServer</mainClass>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Client</id>
+						<goals>
+							<goal>java</goal>
+						</goals>
+						<configuration>
+							<includePluginDependencies>true</includePluginDependencies>
+							<mainClass>home.MessengerClient</mainClass>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Allows the example to be run via 'mvn camel:run' -->
+	  		<plugin>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-maven-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+		  			<logClasspath>true</logClasspath>
+		  			<mainClass>home.MessengerServer</mainClass>
+				</configuration>
+	  		</plugin>
+
+		</plugins>
+	</build>
+
+</project>
