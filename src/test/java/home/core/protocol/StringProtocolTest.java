@@ -12,7 +12,7 @@ public class StringProtocolTest {
     static final Map<String, String> testData = new HashMap<>();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         testData.put("123", "123");
     }
 
