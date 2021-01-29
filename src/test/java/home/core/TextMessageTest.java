@@ -20,6 +20,7 @@ public class TextMessageTest {
         actual.setType(TypeOfMessage.MSG_TEXT);
         actual.setSenderId(0L);
         actual.setText("Text");
+        assertEquals(actual, actual);
 
         TextMessage expected = new TextMessage();
         expected.setType(TypeOfMessage.MSG_TEXT);
