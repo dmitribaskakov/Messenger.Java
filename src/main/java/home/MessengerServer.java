@@ -20,12 +20,12 @@ public class MessengerServer {
         ServerSocket serverSocket = null; //сокет сервера
         Socket clientSocket; //сокет клиента
         BufferedReader clientSocketReader = null; // буферизированный поток чтения из сокета
-        BufferedWriter clientSocketWriter = null; // буферизированный поток записи в сокет
+        BufferedWriter clientSocketWriter = null; // буферизированный поток записи вdddd сокет
 
         try {
             // подимаем соединение и инициализируем потоки для читения и записи соообщения на клиент
             serverSocket = new ServerSocket(serverHostPort);
-            System.out.println("Messenger Server is started!");
+            System.out.println("Messenger Server is started");
 
             clientSocket = serverSocket.accept(); // будет ждать пока клиент не соединится с ним
             clientSocketReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

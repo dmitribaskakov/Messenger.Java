@@ -103,16 +103,59 @@
 				</executions>
 			</plugin>
 
-			<!-- Allows the example to be run via 'mvn camel:run' -->
-	  		<plugin>
-				<groupId>org.apache.camel</groupId>
-				<artifactId>camel-maven-plugin</artifactId>
-				<version>3.7.0</version>
-				<configuration>
-		  			<logClasspath>true</logClasspath>
-		  			<mainClass>home.MessengerServer</mainClass>
-				</configuration>
-	  		</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.3.0</version>
+				<executions>
+					<execution>
+						<id>Server</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>MessengerServer.assembly.xml</descriptor>
+							</descriptors>
+<!--							<descriptors>-->
+<!--								<descriptor>src/assembly/src.xml</descriptor>-->
+<!--							</descriptors>-->
+<!--							<finalName>Server</finalName>-->
+<!--							<descriptorRefs>-->
+<!--								<descriptorRef>Server</descriptorRef>-->
+<!--							</descriptorRefs>-->
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+									<mainClass>home.MessengerServer</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
+					</execution>
+					<execution>
+<!--						<id>Client</id>-->
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>MessengerClient.assembly.xml</descriptor>
+							</descriptors>
+<!--							<finalName>Client</finalName>-->
+<!--							<descriptorRefs>-->
+<!--								<descriptorRef>Client</descriptorRef>-->
+<!--							</descriptorRefs>-->
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+									<mainClass>home.MessengerClient</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
 		</plugins>
 	</build>
