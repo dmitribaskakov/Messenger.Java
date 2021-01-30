@@ -28,9 +28,9 @@ public class MessengerClient {
 
         String serverHostName = "localhost";
         int serverHostPort = 19001;
-        Socket clientSocket = null; //сокет для общения
-        BufferedReader clientSocketReader = null; // поток чтения из сокета
-        BufferedWriter clientSocketWriter = null; // поток записи в сокет
+        Socket clientSocket = null; //сокет для взаимодействия с сервером
+        BufferedReader clientSocketReader = null; // буферизированный поток чтения из сокета
+        BufferedWriter clientSocketWriter = null; // буферизированный поток записи в сокет
 
         try {
             // открываем соединение с сервером и инициализируем потоки для читения и записи соообщения на сервер
