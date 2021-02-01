@@ -21,7 +21,7 @@ public class MessengerServerNio {
 
     private Selector selector;
     private ByteBuffer readBuffer = allocate(8192);
-    private EchoWorker worker = new EchoWorker();
+    private WorkerResponseToMessage workerResponseToMessage = WorkerResponseToMessage EchoWorker();
     private final List<ChangeRequest> changeRequests = new LinkedList<>();
     private final Map<SocketChannel, List<ByteBuffer>> pendingData = new HashMap<>();
 
@@ -31,7 +31,7 @@ public class MessengerServerNio {
         serverChannel.socket().bind(new InetSocketAddress(ADDRESS, PORT););
         selector = SelectorProvider.provider().openSelector();
         serverChannel.register(selector, OP_ACCEPT);
-        new Thread(worker).start();
+        new Thread(workerResponseToMessage).start();
     }
 
 }
