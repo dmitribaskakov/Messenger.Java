@@ -91,5 +91,12 @@ public class MessengerServerNio {
         socketChannel.register(selector, OP_READ);
     }
 
+    private void read(SelectionKey key) throws IOException {
+        SocketChannel socketChannel = (SocketChannel) key.channel();
+        readBuffer.clear();
+        int numRead = socketChannel.read(readBuffer);
+        workerResponseToMessage.processData(this, socketChannel, readBuffer.array(), numRead);
+    }
+
 
 }
