@@ -7,9 +7,11 @@ import java.util.List;
 public class WorkerResponseToMessage implements Runnable {
     private final List<ServerDataEvent> queue = new LinkedList<>();
 
-    void processData(MessengerServerNio server, SocketChannel socket, byte[] data, int count) {
+    public void processData(MessengerServerNio server, SocketChannel socket, byte[] data, int count) {
+        //копирум данные из буфера и создаем дата класс + добавляем его в очередь
         byte[] dataCopy = new byte[count];
         System.arraycopy(data, 0, dataCopy, 0, count);
+
         synchronized (queue) {
             queue.add(new ServerDataEvent(server, socket, dataCopy));
             queue.notify();
@@ -24,7 +26,8 @@ public class WorkerResponseToMessage implements Runnable {
                     try {
                         queue.wait();
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        System.out.println("WorkerResponseToMessage.run: queue is notified");
                     }
                 }
                 System.out.println("Recieved = " + new String(queue.get(0).data));
