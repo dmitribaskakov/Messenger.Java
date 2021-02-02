@@ -13,6 +13,7 @@ import static home.nio.ChangeRequest.CHANGEOPS;
 
 import static java.nio.ByteBuffer.allocate;
 import static java.nio.channels.SelectionKey.OP_ACCEPT;
+import static java.nio.channels.SelectionKey.OP_WRITE;
 
 public class MessengerServerNio {
     static final int PORT = 19000;
@@ -68,5 +69,21 @@ public class MessengerServerNio {
             }
         }
     }
+
+    void send(SocketChannel socket, byte[] data) {
+        synchronized (changeRequests) {
+            changeRequests.add(new ChangeRequest(socket, CHANGEOPS, OP_WRITE));
+            synchronized (pendingData) {
+                List<ByteBuffer> queue = pendingData.get(socket);
+                if (queue == null) {
+                    queue = new ArrayList<>();
+                    pendingData.put(socket, queue);
+                }
+                queue.add(ByteBuffer.wrap(data));
+            }
+        }
+        selector.wakeup();
+    }
+
 
 }
