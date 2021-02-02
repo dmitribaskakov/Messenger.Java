@@ -1,5 +1,9 @@
 package home.nio;
 
+import home.MessengerServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -24,7 +28,9 @@ public class MessengerServerNio {
     private final List<ChangeRequest> changeRequests = new LinkedList<>();
     private final Map<SocketChannel, List<ByteBuffer>> pendingData = new HashMap<>();
 
-    private MessengerServerNio() throws IOException {
+    static Logger log = LoggerFactory.getLogger(MessengerServerNio.class);
+
+    public MessengerServerNio() throws IOException {
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
         serverChannel.configureBlocking(false);
         serverChannel.socket().bind(new InetSocketAddress(ADDRESS, PORT));
@@ -32,11 +38,11 @@ public class MessengerServerNio {
         serverChannel.register(selector, OP_ACCEPT);
         new Thread(workerResponseToMessage).start();
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         new MessengerServerNio().run();
     }
 
-    private void run() throws IOException {
+    public void run() throws IOException {
         while (true) {
             synchronized (changeRequests) {
                 for (ChangeRequest change : changeRequests) {
