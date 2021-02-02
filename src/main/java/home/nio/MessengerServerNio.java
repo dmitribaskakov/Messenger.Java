@@ -12,8 +12,7 @@ import java.util.*;
 import static home.nio.ChangeRequest.CHANGEOPS;
 
 import static java.nio.ByteBuffer.allocate;
-import static java.nio.channels.SelectionKey.OP_ACCEPT;
-import static java.nio.channels.SelectionKey.OP_WRITE;
+import static java.nio.channels.SelectionKey.*;
 
 public class MessengerServerNio {
     static final int PORT = 19000;
@@ -83,6 +82,13 @@ public class MessengerServerNio {
             }
         }
         selector.wakeup();
+    }
+
+    private void accept(SelectionKey key) throws IOException {
+        ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
+        SocketChannel socketChannel = serverSocketChannel.accept();
+        socketChannel.configureBlocking(false);
+        socketChannel.register(selector, OP_READ);
     }
 
 
