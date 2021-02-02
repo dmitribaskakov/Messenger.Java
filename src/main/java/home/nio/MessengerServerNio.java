@@ -98,5 +98,24 @@ public class MessengerServerNio {
         workerResponseToMessage.processData(this, socketChannel, readBuffer.array(), numRead);
     }
 
+    private void write(SelectionKey key) throws IOException {
+        SocketChannel socketChannel = (SocketChannel) key.channel();
+        synchronized (pendingData) {
+            List<ByteBuffer> queue = pendingData.get(socketChannel);
+            while (!queue.isEmpty()) {
+                ByteBuffer buf = queue.get(0);
+                socketChannel.write(buf);
+                if (buf.remaining() > 0) {
+                    break;
+                }
+                System.out.println("Send echo = " + new String(queue.get(0).array()));
+                queue.remove(0);
+            }
+            if (queue.isEmpty()) {
+                key.interestOps(OP_READ);
+            }
+        }
+    }
+
 
 }
