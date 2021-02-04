@@ -36,7 +36,7 @@ public class WorkerResponseToMessage implements Runnable {
                         System.out.println("WorkerResponseToMessage.run: queue be notified");
                     }
                 }
-                System.out.println("Recieved = " + new String(queue.get(0).data));
+                System.out.println("Received from client = " + new String(queue.get(0).data));
                 dataEvent = queue.remove(0);
             }
             dataEvent.server.send(dataEvent.socket, dataEvent.data);
