@@ -7,7 +7,7 @@ import java.util.List;
 public class WorkerResponseToMessage implements Runnable {
     private final List<ServerDataEvent> queue = new LinkedList<>();
 
-    /** обработка сообщения сервером
+    /** Обработка сообщения сервером
      * @param server сервер сообщения
      * @param socket сокет сообщения
      * @param data сообщение в буфере
@@ -33,7 +33,7 @@ public class WorkerResponseToMessage implements Runnable {
                         queue.wait();
                     } catch (InterruptedException e) {
                         //e.printStackTrace();
-                        System.out.println("WorkerResponseToMessage.run: queue is notified");
+                        System.out.println("WorkerResponseToMessage.run: queue be notified");
                     }
                 }
                 System.out.println("Recieved = " + new String(queue.get(0).data));
