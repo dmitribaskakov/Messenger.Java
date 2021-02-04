@@ -7,7 +7,13 @@ import java.util.List;
 public class WorkerResponseToMessage implements Runnable {
     private final List<ServerDataEvent> queue = new LinkedList<>();
 
-    public void processData(MessengerServerNio server, SocketChannel socket, byte[] data, int count) {
+    /** обработка сообщения сервером
+     * @param server сервер сообщения
+     * @param socket сокет сообщения
+     * @param data сообщение в буфере
+     * @param count длина сообщения в буфере
+     */
+   public void processData(MessengerServerNio server, SocketChannel socket, byte[] data, int count) {
         //копирум данные из буфера и создаем дата класс + добавляем его в очередь
         byte[] dataCopy = new byte[count];
         System.arraycopy(data, 0, dataCopy, 0, count);

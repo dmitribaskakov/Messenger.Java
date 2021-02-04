@@ -21,7 +21,6 @@ import static java.nio.channels.SelectionKey.*;
 public class MessengerServerNio {
     static final int PORT = 19000;
     static final String ADDRESS = "localhost";
-
     private Selector selector;
     private ByteBuffer readBuffer = allocate(8192);
     private WorkerResponseToMessage workerResponseToMessage = new WorkerResponseToMessage();
