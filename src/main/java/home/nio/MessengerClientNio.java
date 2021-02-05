@@ -1,5 +1,8 @@
 package home.nio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -17,6 +20,8 @@ public class MessengerClientNio {
     static final int PORT = 19000;
     static final String ADDRESS = "localhost";
     private ByteBuffer buffer = allocate(16);
+
+    static Logger log = LoggerFactory.getLogger(MessengerClientNio.class);
 
     public void run() throws IOException {
         SocketChannel channel = SocketChannel.open();

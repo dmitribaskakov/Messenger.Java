@@ -1,10 +1,17 @@
 package home.nio;
 
+import home.MessengerClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.nio.channels.SocketChannel;
 import java.util.LinkedList;
 import java.util.List;
 
 public class WorkerResponseToMessage implements Runnable {
+
+    static Logger log = LoggerFactory.getLogger(WorkerResponseToMessage.class);
+
     private final List<ServerDataEvent> queue = new LinkedList<>();
 
     /** Обработка сообщения сервером
