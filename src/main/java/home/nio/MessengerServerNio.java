@@ -37,9 +37,10 @@ public class MessengerServerNio {
         serverChannel.register(selector, OP_ACCEPT);
         new Thread(workerResponseToMessage).start();
     }
-    public static void main(String[] args) throws IOException{
-        new MessengerServerNio().run();
-    }
+//
+//    public static void main(String[] args) throws IOException{
+//        new MessengerServerNio().run();
+//    }
 
     public void run() throws IOException {
         while (true) {
