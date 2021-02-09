@@ -19,7 +19,7 @@ import static java.nio.channels.SelectionKey.*;
 public class MessengerClientNio {
     static final int PORT = 19000;
     static final String ADDRESS = "localhost";
-    private ByteBuffer buffer = allocate(16);
+    private ByteBuffer buffer = allocate(255);
 
     static Logger log = LoggerFactory.getLogger(MessengerClientNio.class);
 
@@ -30,11 +30,13 @@ public class MessengerClientNio {
         channel.register(selector, OP_CONNECT);
         channel.connect(new InetSocketAddress(ADDRESS, PORT));
         BlockingQueue<String> queue = new ArrayBlockingQueue<>(2);
+
+        // отдельный поток на чтение ввода с клавиатуры
         new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 String line = scanner.nextLine();
-                if ("q".equals(line)) {
+                if ("\\q".equals(line)) {
                     System.exit(0);
                 }
                 try {
@@ -48,6 +50,8 @@ public class MessengerClientNio {
                 selector.wakeup();
             }
         }).start();
+
+        // в текущем потоке обмен сообщений с сервером
         while (true) {
             selector.select();
             for (SelectionKey selectionKey : selector.selectedKeys()) {

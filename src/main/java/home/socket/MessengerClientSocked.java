@@ -9,7 +9,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class MessengerClientSocked {1
+public class MessengerClientSocked {
     static Logger log = LoggerFactory.getLogger(MessengerClientSocked.class);
 
     public static void main(String... args) { //throws Exception
