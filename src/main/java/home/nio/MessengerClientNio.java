@@ -40,7 +40,8 @@ public class MessengerClientNio {
                 try {
                     queue.put(line);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
+                    System.out.println("MessengerClientNio.run: queue be notified");
                 }
                 SelectionKey key = channel.keyFor(selector);
                 key.interestOps(OP_WRITE);
