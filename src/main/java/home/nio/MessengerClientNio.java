@@ -30,11 +30,20 @@ public class MessengerClientNio {
         channel.register(selector, OP_CONNECT);
         channel.connect(new InetSocketAddress(ADDRESS, PORT));
         BlockingQueue<String> queue = new ArrayBlockingQueue<>(2);
+        BlockingQueue<String> queueSystemOut = new ArrayBlockingQueue<String>(16);
 
-        // отдельный поток на чтение ввода с клавиатуры
+        // создаем отдельный поток на чтение ввода с клавиатуры
         new Thread(() -> {
+            System.out.println("Press you message or \\q for exit:");
             Scanner scanner = new Scanner(System.in);
             while (true) {
+                while (!queueSystemOut.isEmpty()) {
+                    try {
+                        System.out.println(queueSystemOut.take());
+                    } catch (InterruptedException e) {
+
+                    }
+                }
                 String line = scanner.nextLine();
                 if ("\\q".equals(line)) {
                     System.exit(0);
@@ -51,21 +60,33 @@ public class MessengerClientNio {
             }
         }).start();
 
-        // в текущем потоке обмен сообщений с сервером
+        // в текущем потоке обмен сообщениями с сервером
         while (true) {
             selector.select();
             for (SelectionKey selectionKey : selector.selectedKeys()) {
                 if (selectionKey.isConnectable()) {
                     channel.finishConnect();
                     selectionKey.interestOps(OP_WRITE);
+                    //System.out.println("[Connected to server]");
                 } else if (selectionKey.isReadable()) {
                     buffer.clear();
                     channel.read(buffer);
-                    System.out.println("Recieved = " + new String(buffer.array()));
+                    try {
+                        queueSystemOut.put("[Received = '" + new String(buffer.array())+"']");
+                    } catch (InterruptedException e) {
+
+                    }
+                    //System.out.println("[Received = '" + new String(buffer.array())+"']");
                 } else if (selectionKey.isWritable()) {
                     String line = queue.poll();
                     if (line != null) {
                         channel.write(ByteBuffer.wrap(line.getBytes()));
+                        try {
+                            queueSystemOut.put("[Send to server = '" + line +"']");
+                        } catch (InterruptedException e) {
+
+                        }
+                        //System.out.println("[Send to server = '" + line +"']");
                     }
                     selectionKey.interestOps(OP_READ);
                 }
