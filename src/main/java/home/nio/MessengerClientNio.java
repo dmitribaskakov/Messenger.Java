@@ -37,13 +37,13 @@ public class MessengerClientNio {
             System.out.println("Press you message or \\q for exit:");
             Scanner scanner = new Scanner(System.in);
             while (true) {
-                while (!queueSystemOut.isEmpty()) {
-                    try {
-                        System.out.println(queueSystemOut.take());
-                    } catch (InterruptedException e) {
-
-                    }
-                }
+//                while (!queueSystemOut.isEmpty()) {
+//                    try {
+//                        System.out.println(queueSystemOut.take());
+//                    } catch (InterruptedException e) {
+//
+//                    }
+//                }
                 String line = scanner.nextLine();
                 if ("\\q".equals(line)) {
                     System.exit(0);
