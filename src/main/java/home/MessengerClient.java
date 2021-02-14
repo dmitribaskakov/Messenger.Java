@@ -30,7 +30,6 @@ public class MessengerClient {
         channel.register(selector, OP_CONNECT);
         channel.connect(new InetSocketAddress(ADDRESS, PORT));
         BlockingQueue<String> queue = new ArrayBlockingQueue<>(2);
-        BlockingQueue<String> queueSystemOut = new ArrayBlockingQueue<String>(16);
 
         System.out.println("Initialize Messenger Client");
 
