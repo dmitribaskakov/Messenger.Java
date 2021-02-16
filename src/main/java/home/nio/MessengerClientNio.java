@@ -30,7 +30,7 @@ public class MessengerClientNio {
         channel.register(selector, OP_CONNECT);
         channel.connect(new InetSocketAddress(ADDRESS, PORT));
         BlockingQueue<String> queue = new ArrayBlockingQueue<>(2);
-        BlockingQueue<String> queueSystemOut = new ArrayBlockingQueue<String>(16);
+//        BlockingQueue<String> queueSystemOut = new ArrayBlockingQueue<String>(16);
 
         // создаем отдельный поток на чтение ввода с клавиатуры
         new Thread(() -> {
@@ -71,21 +71,21 @@ public class MessengerClientNio {
                 } else if (selectionKey.isReadable()) {
                     buffer.clear();
                     channel.read(buffer);
-                    try {
-                        queueSystemOut.put("[Received = '" + new String(buffer.array())+"']");
-                    } catch (InterruptedException e) {
-
-                    }
+//                    try {
+//                        queueSystemOut.put("[Received = '" + new String(buffer.array())+"']");
+//                    } catch (InterruptedException e) {
+//
+//                    }
                     //System.out.println("[Received = '" + new String(buffer.array())+"']");
                 } else if (selectionKey.isWritable()) {
                     String line = queue.poll();
                     if (line != null) {
                         channel.write(ByteBuffer.wrap(line.getBytes()));
-                        try {
-                            queueSystemOut.put("[Send to server = '" + line +"']");
-                        } catch (InterruptedException e) {
-
-                        }
+//                        try {
+//                            queueSystemOut.put("[Send to server = '" + line +"']");
+//                        } catch (InterruptedException e) {
+//
+//                        }
                         //System.out.println("[Send to server = '" + line +"']");
                     }
                     selectionKey.interestOps(OP_READ);
